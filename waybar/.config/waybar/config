@@ -1,0 +1,83 @@
+// -*- mode: jsonc -*-
+{
+    "position": "top",
+    "height": 30,
+    "spacing": 4,
+    "passthrough": false,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window",
+
+    ],
+    "modules-center": [
+      "clock",
+    ],
+    "modules-right": [
+        "cpu",
+        "memory",
+        "network",
+        "pulseaudio",
+        "backlight",
+        "hyprland/language",
+        "battery",
+        "tray",
+    ],
+    "network": {
+        "interval": 1,
+        "format": "{bandwidthUpBits} {bandwidthDownBits}",
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "interval": 1,
+        "timezone": "Asia/Jerusalem",
+        "format": "{:%H:%M:%S %d/%m/%Y}",
+        "tooltip": true,
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    },
+    "hyprland/language": {
+        "format": "{shortDescription}",
+        "tooltip-format": "{long}"
+    },
+    "cpu": {
+        "interval": 1,
+        "format": "CPU: {usage}%",
+        "tooltip": true,
+    },
+    "memory": {
+        "interval": 1,
+        "format": "RAM: {percentage}%"
+    },
+    "pulseaudio": {
+        "interval": 1,
+        "format": "{volume}% 󰎇 {format_source}",
+        "format-muted": "{volume}% 󰎊 {format_source}",
+        "format-source": "{volume}% 󰍬",
+        "format-source-muted": "{volume}% 󰍭",
+        "max-volume": 100,
+        "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+    },
+    "backlight": {
+        "interval": 1,
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "battery": {
+        "interval": 10,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{time}",
+    },
+}

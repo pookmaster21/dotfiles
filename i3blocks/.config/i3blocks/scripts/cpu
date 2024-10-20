@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+interval=${interval:-0} # just in case it's started not by i3blocks
+stats=${stats:-usr nice sys iowait}
+format=${format:-%5.2f}
+warn=${warn:-80}
+declare -A colormap=(
+                    [usr]=${usr_color:-green}
+                    [nice]=${nice_color:-yellow}
+                    [sys]=${sys_color:-red}
+                    [iowait]=${iowait_color:-grey}
+                    [irq]=${irq_color:-purple}
+                    [soft]=${soft_color:-violet}
+                    [steal]=${steal_color:-orange}
+                    [guest]=${guest_color:-cyan}
+                    [gnice]=${gnice_color:-blue}
+                    [idle]=${idle_color:-white}
+                    [total]=${total_color:-white}
+                    )
+# If $report_time not set:
+# Set it to $interval - 1, but not less than 1.
+# If $interval is 'repeat' or -2 set report_time to 5.
+if [[ -z $report_time ]]; then
+    if [[ "$interval" =~ ^-?[0-9]+$ ]];
+    then
+        if [[ $interval -gt 2 ]]; then
+            report_time=$(( interval - 1 ))
+        elif [[ $interval == -2 ]]; then
+            report_time=5
+        else
+            report_time=1
+        fi
+    elif [[ $interval == repeat ]]; then
+        report_time=5
+    fi
+fi
+# 'idle' is hardcoded as it's always required, no need to ask for it two times.
+getstats=${stats//idle /}
+# Get detailed CPU load as a set of variables with same names:
+if _mpstat="$(command -v mpstat)"
+then
+    declare $( ${_mpstat} -u "$report_time" 1 | sed -n '3,4p' | awk -v stats="$getstats idle" '
+    BEGIN{
+    split(stats, fields)
+    }
+    {
+    split($0, headers)
+    getline
+    split($0, values)
+    for (i in fields) {
+        for (j in headers)
+        if ( headers[j] ~ "^%" fields[i] ) {
+            printf "%s=%s\n", fields[i], values[j]
+        }
+    }
+    }
+    ')
+    total=$( bc <<<"scale=2; 100 - $idle" )
+fi
+# Output stats with pango formatting in a defined order
+printf "%s" "CPU"
+for stat in $stats
+do
+    # No other way to make format adjustable
+    printf " <span color='%s'>$format</span>%%" "${colormap[$stat]}" "${!stat}"
+done
+echo # trailing newline
+# Short text
+printf "CPU $format%%\n" "$total"
+# Set urgent flag if over warn threshold
+(( $( bc <<<"$total >= $warn" ) )) && exit 33 || :

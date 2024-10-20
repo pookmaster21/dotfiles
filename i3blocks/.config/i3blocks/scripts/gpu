@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+t_warn=70
+t_crit=90
+
+res=$(nvidia-settings -q GPUUtilization -t)
+char=","
+res=${res//$char}
+
+IFS=' ' read -r -a array <<< $res
+
+for index in ${!array[*]}
+do
+  array[index]=${array[index]:$(expr index ${array[index]} "=")}
+done
+
+
+temp=$(nvidia-settings -q gpucoretemp -t)
+
+printf "GPU %2.0f%% %2.0f%% %2.0f%% %2.0f%% @%s\n" ${array[*]} $temp
+printf "GPU %2.0f%%@%s\n" ${array[0]} $temp
+
+for status in ${array[*]}
+do
+  if [[ $(echo "${status}>${t_crit}" | bc) != "0" ]]; then
+    echo "#FF0000"
+    exit 33
+  fi
+done
+
+for status in ${array[*]}
+do
+  if [[ $(echo "${status}>${t_warn}" | bc) != "0" ]]; then
+    echo "#FFBF00"
+    exit 33
+  fi
+done

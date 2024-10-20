@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+for verb in $@
+do
+  if [[ -d "$verb" ]]; then
+    echo "$verb already exists"
+  else
+    mkdir -p "$verb/.config"
+    mv "$HOME/.config/$verb/" "$verb/.config"
+    stow "$verb"
+  fi
+done
+

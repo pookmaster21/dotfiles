@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+if [[ $button == 1 ]]; then
+  wpctl set-mute @DEFAULT_SINK@ toggle
+elif [[ $button == 3 ]]; then
+  wpctl set-mute @DEFAULT_SOURCE@ toggle
+fi
+
+
+volume=$(wpctl get-volume @DEFAULT_SINK@)
+IFS=' ' read -r -a data <<< $volume
+volume=$(echo "${data[1]}*100" | bc)
+
+if [[ ${#data[@]} > 2 ]]; then
+  printf "󰽳%.1f%%" "${volume}"
+else
+  printf "󰎇%.1f%%" "${volume}"
+fi
+
+printf " "
+
+mic=$(wpctl get-volume @DEFAULT_SOURCE@)
+IFS=' ' read -r -a data <<< $mic
+mic=$(echo "${data[1]}*100" | bc)
+
+if [[ ${#data[@]} > 2 ]]; then
+  printf "󰍭%.1f%%" "${mic}"
+else
+  printf "󰍬%.1f%%" "${mic}"
+fi
+
+echo ""

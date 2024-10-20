@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+icons_dis=("󱃍 " "󰁺 " "󰁻 " "󰁼 " "󰁽 " "󰁾 " "󰁿 " "󰂀 " "󰂁 " "󰂂 " "󰁹 ")
+icons_char=("󰢟 " "󰢜 " "󰂆 " "󰂇 " "󰂈 " "󰢝 " "󰂉 " "󰢞 " "󰂊 " "󰂋 " "󰂅 ")
+
+res=$(acpi)
+res=${res:$(expr index "${res}" ":")}
+index=$(expr index "${res}" ",")
+status=${res:0:index-1}
+battery=${res:index}
+
+index=$(expr index "${battery}" ",")
+
+time=""
+if [[ ${index} != "0" ]]; then
+  time=${battery:index+1}
+  time="(${time:0:$(expr index "${time}" " ")-4})"
+  battery=${battery:0:index-1}
+fi
+
+battery=${battery:0:${#battery}-1}
+
+status_type=$(expr index "$status" "D")
+
+if [[ ${status_type} != "0" ]]; then
+  icon=${icons_dis[$(expr $battery / 10)]}
+else
+  icon=${icons_char[$(expr $battery / 10)]}
+fi
+
+printf "%s %s%% %s\n" $icon $battery $time
+printf "%s %s%%\n" $icon $battery
+
+if [[ -z $(echo "$battery < 15" | bc) && $(expr index "$status" "D") != 0 ]]; then
+  exit 33
+fi

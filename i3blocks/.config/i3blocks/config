@@ -1,0 +1,38 @@
+# Global properties
+separator=true
+separator_block_width=15
+markup=pango
+align=center
+command=$SCRIPT_DIR/$BLOCK_NAME
+
+[gpu]
+interval=1
+min_width=GPU 99%
+
+[cpu]
+min_width=CPU 99.99%
+interval=1
+
+[memory]
+min_width=MEM 99.99%
+interval=3
+
+[bandwidth]
+interval=persist
+min_width= 100.0M/s 100.0M/s
+label=
+
+[volume]
+interval=1
+min_width=󰎇100.0% 󰍬
+
+[battery]
+interval=10
+min_width=󰂅100%
+
+[key_layout]
+min_width=us
+interval=1
+
+[time]
+interval=1

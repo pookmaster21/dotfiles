@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+if [[ $button == "1" || $button == "2" || $button == "4" ]]; then
+  xkblayout-state set +1
+fi
+
+printf "%s\n" $(xkblayout-state print %s)
