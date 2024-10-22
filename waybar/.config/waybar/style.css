@@ -9,7 +9,7 @@
     padding: 0.5px;
 }
 
-window#waybar {
+window#hyprland {
     background-color: rgba(43, 48, 59, 0.5);
     border-bottom: 3px solid rgba(100, 114, 125, 0.5);
     color: #ffffff;
@@ -17,15 +17,15 @@ window#waybar {
     transition-duration: .5s;
 }
 
-window#waybar.hidden {
+window#hyprland.hidden {
     opacity: 0.2;
 }
 
-window#waybar.termite {
+window#hyprland.termite {
     background-color: #3F3F3F;
 }
 
-window#waybar.chromium {
+window#hyprland.chromium {
     background-color: #000000;
     border: none;
 }
