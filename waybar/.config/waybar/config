@@ -13,6 +13,7 @@
       "clock",
     ],
     "modules-right": [
+        "custom/gpu",
         "cpu",
         "memory",
         "network",
@@ -40,6 +41,11 @@
     "hyprland/language": {
         "format": "{shortDescription}",
         "tooltip-format": "{long}"
+    },
+    "custom/gpu": {
+        "interval": 1,
+        "format": "GPU {}%",
+        "exec": "nvidia-smi --query-gpu utilization.gpu --format=csv,noheader,nounits",
     },
     "cpu": {
         "interval": 1,
