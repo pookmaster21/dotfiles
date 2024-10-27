@@ -13,6 +13,7 @@ return {
 				ensure_installed = {
 					"rust_analyzer",
 					"black",
+					"isort",
 					"clang-format",
 					"codelldb",
 					"debugpy",
