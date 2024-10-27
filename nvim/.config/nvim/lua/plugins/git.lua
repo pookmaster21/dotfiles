@@ -16,6 +16,7 @@ return {
 			vim.keymap.set("n", "<leader>gi", ":Git init<CR>", {})
 			vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", {})
 			vim.keymap.set("n", "<leader>gp", ":Git push<CR>", {})
+			vim.keymap.set("n", "<leader>gaa", ":Git add -A<CR>", {})
 		end,
 	},
 }
