@@ -40,7 +40,8 @@
     },
     "hyprland/language": {
         "format": "{shortDescription}",
-        "tooltip-format": "{long}"
+        "tooltip-format": "{long}",
+        "on-click": "hyprctl switchxkblayout current next",
     },
     "custom/gpu": {
         "interval": 1,
