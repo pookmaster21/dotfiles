@@ -1,140 +1,95 @@
-* {
-  border: none;
-  border-radius: 10px;
-  font-family: FiraCode Nerd Font;
-  font-weight: bold;
-  font-size: 12px;
-  min-height: 20px;
-  margin: 0px;
-  padding: 0.5px;
+#waybar {
+  font-family: "FiraCode Nerd Font", Cantarell, Noto Sans, sans-serif;
+  font-size: 16px;
 }
 
-window#hyprland {
-  background-color: rgba(43, 48, 59, 0.5);
-  border-bottom: 3px solid rgba(100, 114, 125, 0.5);
-  color: #ffffff;
-  transition-property: background-color;
-  transition-duration: .5s;
+#window {
+  padding: 0 10px;
 }
 
-window#hyprland.hidden {
-  opacity: 0.2;
-}
-
-window#hyprland.termite {
-  background-color: #3F3F3F;
-}
-
-window#hyprland.chromium {
-  background-color: #000000;
-  border: none;
-}
-
-button {
-  box-shadow: inset 0 -3px transparent;
+window#waybar {
   border: none;
   border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+  transition-duration: 0s;
+  color: rgba(217, 216, 216, 1);
+  background: #1a1b26;
 }
 
-button:hover {
-  background: inherit;
-  box-shadow: inset 0 -3px #ffffff;
+#workspaces {
+  margin: 0 5px;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  color: #565f89;
+  border: 3px solid rgba(9, 85, 225, 0);
+  border-radius: 10px;
+  min-width: 33px;
+}
+
+#workspaces button.visible {
+  color: #a9b1d6;
+}
+
+#workspaces button.focused {
+  border-top: 3px solid #7aa2f7;
+  border-bottom: 3px solid #7aa2f7;
+}
+
+#workspaces button.urgent {
+  background-color: #a96d1f;
+  color: white;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  border-color: #bb9af7;
+  color: #bb9af7;
+}
+
+/* Repeat style here to ensure properties are overwritten as there's no !important and button:hover above resets the colour */
+
+#workspaces button.focused {
+  color: #7aa2f7;
+}
+
+#workspaces button.focused:hover {
+  color: #bb9af7;
 }
 
 #pulseaudio {}
 
-#workspaces button {
-  padding: 0 5px;
-  background-color: transparent;
-  color: #ffffff;
-}
-
-#workspaces button:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-#workspaces button.focused {
-  background-color: #64727D;
-  box-shadow: inset 0 -3px #ffffff;
-}
-
-#workspaces button.urgent {
-  background-color: #eb4d4b;
-}
-
-#mode {
-  background-color: #64727D;
-  box-shadow: inset 0 -3px #ffffff;
-}
-
-#clock,
+#tray,
 #battery,
 #cpu,
+#language,
+#custom-gpu,
 #memory,
-#backlight,
 #network,
 #pulseaudio,
-#tray,
-#custom-gpu,
-
-#window,
-#workspaces {
-  margin: 0 4px;
+#backlight,
+#custom-media {
+  margin: 0px 0px 0px 10px;
+  padding: 0 7;
 }
 
-.modules-left>widget:first-child>#workspaces {
-  margin-left: 0;
+#battery.warning {
+  color: rgba(255, 210, 4, 1);
 }
 
-.modules-right>widget:last-child>#workspaces {
-  margin-right: 0;
+#battery.critical {
+  color: rgba(238, 46, 36, 1);
 }
 
-#custom-gpu {}
-
-#clock {}
-
-#battery {}
-
-#battery.charging,
-#battery.plugged {
-  color: #ffffff;
-  background-color: #26A65B;
+#battery.charging {
+  color: rgba(217, 216, 216, 1);
 }
 
 @keyframes blink {
   to {
     background-color: #ffffff;
-    color: #000000;
+    color: black;
   }
 }
-
-/* Using steps() instead of linear as a timing function to limit cpu usage */
-#battery.critical:not(.charging) {
-  background-color: #f53c3c;
-  color: #ffffff;
-  animation-name: blink;
-  animation-duration: 0.5s;
-  animation-timing-function: steps(12);
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-label:focus {
-  background-color: #000000;
-}
-
-#cpu {}
-
-#memory {}
-
-
-#backlight {}
-
-#network {}
-
-#pulseaudio {}
-
-#tray {}
-
-#language {}

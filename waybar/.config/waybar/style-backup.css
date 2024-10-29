@@ -1,0 +1,140 @@
+* {
+  border: none;
+  border-radius: 10px;
+  font-family: FiraCode Nerd Font;
+  font-weight: bold;
+  font-size: 12px;
+  min-height: 20px;
+  margin: 0px;
+  padding: 0.5px;
+}
+
+window#hyprland {
+  background-color: rgba(43, 48, 59, 0.5);
+  border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+  color: #ffffff;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+window#hyprland.hidden {
+  opacity: 0.2;
+}
+
+window#hyprland.termite {
+  background-color: #3F3F3F;
+}
+
+window#hyprland.chromium {
+  background-color: #000000;
+  border: none;
+}
+
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+  border-radius: 0;
+}
+
+button:hover {
+  background: inherit;
+  box-shadow: inset 0 -3px #ffffff;
+}
+
+#pulseaudio {}
+
+#workspaces button {
+  padding: 0 5px;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+#workspaces button:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#workspaces button.focused {
+  background-color: #64727D;
+  box-shadow: inset 0 -3px #ffffff;
+}
+
+#workspaces button.urgent {
+  background-color: #eb4d4b;
+}
+
+#mode {
+  background-color: #64727D;
+  box-shadow: inset 0 -3px #ffffff;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#backlight,
+#network,
+#pulseaudio,
+#tray,
+#custom-gpu,
+
+#window,
+#workspaces {
+  margin: 0 4px;
+}
+
+.modules-left>widget:first-child>#workspaces {
+  margin-left: 0;
+}
+
+.modules-right>widget:last-child>#workspaces {
+  margin-right: 0;
+}
+
+#custom-gpu {}
+
+#clock {}
+
+#battery {}
+
+#battery.charging,
+#battery.plugged {
+  color: #ffffff;
+  background-color: #26A65B;
+}
+
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+label:focus {
+  background-color: #000000;
+}
+
+#cpu {}
+
+#memory {}
+
+
+#backlight {}
+
+#network {}
+
+#pulseaudio {}
+
+#tray {}
+
+#language {}
