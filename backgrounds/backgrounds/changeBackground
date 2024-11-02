@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ $# > 1 ]]; then
+  echo "too many args"
+  exit 33
+fi
+if [[ $# < 1 ]]; then
+  echo "not enogh args"
+  exit 33
+fi
+
+ln -sf "$1" ~/backgrounds/background
