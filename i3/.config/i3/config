@@ -52,7 +52,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec alacritty
 
 # background
-exec_always --no-startup-id "feh --bg-scale $HOME/backgrounds/background"
+exec_always --no-startup-id "feh --bg-scale $HOME/.backgrounds/background"
 
 # switch lang
 exec_always "setxkbmap -layout us,il"
