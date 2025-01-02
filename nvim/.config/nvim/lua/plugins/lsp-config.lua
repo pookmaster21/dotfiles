@@ -24,9 +24,7 @@ return {
 					"gomodifytags",
 					"mypy",
 					"prettier",
-					"pyright",
 					"rubocop",
-					"ruff",
 					"stylua",
 				},
 			})
@@ -49,6 +47,7 @@ return {
 					"zls",
 					"jdtls",
 					"hyprls",
+					"pyright",
 					"gopls",
 					"clangd",
 				},
@@ -111,6 +110,10 @@ return {
 			})
 
 			lspconfig.gopls.setup({
+				capabilities = capabilities,
+			})
+
+			lspconfig.pyright.setup({
 				capabilities = capabilities,
 			})
 

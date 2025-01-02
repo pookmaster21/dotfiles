@@ -13,10 +13,10 @@
       "clock",
     ],
     "modules-right": [
+        "network",
         "custom/gpu",
         "cpu",
         "memory",
-        "network",
         "pulseaudio",
         "backlight",
         "hyprland/language",
