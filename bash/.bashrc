@@ -11,15 +11,6 @@ alias cd='z'
 alias cat='bat --style=plain --pager never'
 PS1='[\u@\h \w]\$ '
 
-# gpu encode and decode
-export VDPAU_DRIVER="nvidia"
-export LIBVA_DRIVER_NAME="nvidia"
-
-# DLSS and RTX
-export VKD3D_CONFIG=dxr11,dxr
-export PROTON_ENABLE_NVAPI=1
-export PROTON_ENABLE_NGX_UPDATER=1
-
 # zoxide
 eval "$(zoxide init bash)"
 
