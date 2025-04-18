@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# upgrade system
+if command -v yay 2>&1 >/dev/null
+then
+  yay --noconfirm -v
+else
+  sudo pacman -Suyyv --noconfirm
+fi
+
+# upgrade flutter
+if command -v flutter 2>&1 >/dev/null
+then
+  flutter upgrade -vv
+fi
