@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # upgrade system
-if command -v yay 2>&1 >/dev/null
+if command -v yay 2>&1> /dev/null
 then
   yay --noconfirm -v
 else
@@ -9,19 +9,19 @@ else
 fi
 
 # upgrade flutter
-if command -v flutter 2>&1 >/dev/null
+if command -v flutter 2>&1> /dev/null
 then
   flutter upgrade -vv
 fi
 
 # upgrade rust toolchain
-if command -v rustup 2>&1 > /dev/null
+if command -v rustup 2>&1> /dev/null
 then
   rustup update
 fi
 
 # upgrade haskell toolchain
-if command -v ghcup 2>&1 > /dev/null
+if command -v ghcup 2>&1> /dev/null
 then
   ghcup upgrade -v
   ghcup install ghc latest -v
