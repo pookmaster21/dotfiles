@@ -29,3 +29,9 @@ then
   ghcup install hls latest -v
   ghcup install stack latest -v
 fi
+
+# update nvim lazy plugins
+if command -v nvim 2>&1> /dev/null
+then
+  nvim --headless -c "Lazy! sync" -c "qall"
+fi
