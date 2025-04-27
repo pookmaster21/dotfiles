@@ -35,3 +35,9 @@ if command -v nvim 2>&1> /dev/null
 then
   nvim --headless -c "Lazy! sync" -c "qall"
 fi
+
+# upgrade pipx packages
+if command -v pipx 2>&1> /dev/null
+then
+  pipx upgrade-all -v
+fi
