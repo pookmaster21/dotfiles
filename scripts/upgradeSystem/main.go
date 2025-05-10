@@ -57,15 +57,13 @@ func main() {
 			continue
 		}
 
-		args := cmd.DefaultArgs
+		execCommand := exec.Command(cmd.Name, cmd.DefaultArgs...)
 
-		execCommand := exec.Command(cmd.Name, args...)
-
-		execCommand.Stdout = os.Stdout
 		if verbose && cmd.VerboseArgs != "" {
 			execCommand.Args = append(execCommand.Args, cmd.VerboseArgs)
 		}
 
+		execCommand.Stdout = os.Stdout
 		if quite {
 			execCommand.Stdout = nil
 		}
@@ -92,20 +90,16 @@ func NewCommand(name string, defaultArgs []string, verboseArgs string) *command 
 
 func checkFlags() {
 	if flag.NArg() == 0 && help {
-		UsageAndExit("")
+		UsageAndExit()
 	}
 
 	if verbose && quite {
-		UsageAndExit("Can't output quitely and verbosly!")
+		fmt.Println("Can't output quitely and verbosly!\n")
+		UsageAndExit()
 	}
 }
 
-func UsageAndExit(msg string) {
-	if msg != "" {
-		fmt.Println(msg)
-		fmt.Println()
-	}
-
+func UsageAndExit() {
 	flag.Usage()
 	os.Exit(0)
 }
