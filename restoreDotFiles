@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-DIRS=$(which "$0" | find -mindepth 1 -maxdepth 1 -type d -not -name '.*' -printf "%f\n")
-
 make -C scripts/upgradeSystem
+
+DIRS=$(which "$0" | find -mindepth 1 -maxdepth 1 -type d -not -name '.*' -printf "%f\n")
 
 for DIR in $DIRS
 do
