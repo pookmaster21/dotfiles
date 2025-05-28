@@ -6,6 +6,6 @@ DIRS=$(which "$0" | find -mindepth 1 -maxdepth 1 -type d -not -name '.*' -printf
 
 for DIR in $DIRS
 do
-  stow $DIR
+  stow -t ~ $DIR
 done
 
