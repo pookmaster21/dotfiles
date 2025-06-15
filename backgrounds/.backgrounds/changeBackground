@@ -9,4 +9,4 @@ if [[ $# < 1 ]]; then
   exit 33
 fi
 
-ln -sf "$1" ~/backgrounds/background
+ln -sf "$1" ~/.backgrounds/background
