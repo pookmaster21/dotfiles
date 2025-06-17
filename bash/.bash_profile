@@ -2,8 +2,6 @@
 # ~/.bash_profile
 #
 
-fastfetch
-
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 . "$HOME/.cargo/env"
 
