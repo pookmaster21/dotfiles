@@ -1,59 +1,59 @@
 return {
   {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-          },
+    "mason-org/mason.nvim",
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
         },
-        ensure_installed = {
-          "rust_analyzer",
-          "black",
-          "isort",
-          "clang-format",
-          "codelldb",
-          "debugpy",
-          "delve",
-          "gofumpt",
-          "goimports-reviser",
-          "golines",
-          "gomodifytags",
-          "mypy",
-          "prettier",
-          "rubocop",
-          "stylua",
-        },
-      })
-    end,
+      },
+      ensure_installed = {
+        "rust_analyzer",
+        "black",
+        "isort",
+        "clang-format",
+        "codelldb",
+        "debugpy",
+        "delve",
+        "gofumpt",
+        "goimports-reviser",
+        "golines",
+        "gomodifytags",
+        "mypy",
+        "prettier",
+        "rubocop",
+        "stylua",
+      },
+    },
   },
   {
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "cssls",
-          "dockerls",
-          "eslint",
-          "hls",
-          "jsonls",
-          "lua_ls",
-          "ruby_lsp",
-          "tailwindcss",
-          "ts_ls",
-          "zls",
-          "jdtls",
-          "hyprls",
-          "pyright",
-          "gopls",
-          "clangd",
-          "bashls",
-        },
-      })
-    end,
+    "mason-org/mason-lspconfig.nvim",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    opts = {
+      ensure_installed = {
+        "cssls",
+        "dockerls",
+        "eslint",
+        "hls",
+        "jsonls",
+        "lua_ls",
+        "ruby_lsp",
+        "tailwindcss",
+        "ts_ls",
+        "zls",
+        "jdtls",
+        "hyprls",
+        "pyright",
+        "gopls",
+        "clangd",
+        "bashls",
+      },
+    }
   },
   {
     "neovim/nvim-lspconfig",
