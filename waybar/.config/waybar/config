@@ -46,7 +46,7 @@
     "custom/gpu": {
         "interval": 1,
         "format": "GPU {}%",
-        "exec": "nvidia-smi --query-gpu utilization.gpu --format=csv,noheader,nounits",
+        "exec": "$PWD/gpu",
     },
     "cpu": {
         "interval": 1,
