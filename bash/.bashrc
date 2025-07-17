@@ -40,8 +40,3 @@ export PATH="$HOME/flutter/bin:$PATH"
 
 # Created by `pipx` on 2024-05-22 16:58:12
 export PATH="$PATH:/home/lavi/.local/bin"
-
-fastfetch
-
-~/.loginScript
-
