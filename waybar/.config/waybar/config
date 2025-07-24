@@ -45,8 +45,8 @@
     },
     "custom/gpu": {
         "interval": 1,
-        "format": "GPU {}%",
-        "exec": "$PWD/gpu",
+        "format": "GPU: {}",
+        "exec": "~/.config/waybar/gpu",
     },
     "cpu": {
         "interval": 1,

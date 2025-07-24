@@ -5,20 +5,17 @@ from json import loads
 from subprocess import CalledProcessError, check_output
 
 
-def get_gpu_stat() -> str | None:
+def get_gpu_stat() -> list[str | None]:
     try:
-        return loads(check_output("nvtop -s", shell=True).decode())[0]["gpu_util"]
+        info: dict = loads(check_output("nvtop -s", shell=True).decode())[0]
+        return [info["gpu_util"], info["temp"]]
     except CalledProcessError:
-        return "err"
+        return ["err", "err"]
 
 
 if __name__ == "__main__":
-    util: str | None = get_gpu_stat()
-    if util == "err":
+    util: list[str | None] = get_gpu_stat()
+    if util[0] == "err" or util[0] == None:
         print(-1)
         sys.exit(0)
-
-    if util is None:
-        print(-1)
-        sys.exit(0)
-    print(util)
+    print(f"{util[0]}@{util[1]}")
