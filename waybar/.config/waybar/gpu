@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import sys
 from json import loads
 from subprocess import CalledProcessError, check_output
 
@@ -8,14 +7,14 @@ from subprocess import CalledProcessError, check_output
 def get_gpu_stat() -> list[str | None]:
     try:
         info: dict = loads(check_output("nvtop -s", shell=True).decode())[0]
-        return [info["gpu_util"], info["temp"]]
+        return [
+            info["gpu_util"] if info["gpu_util"] is not None else "-1",
+            info["temp"] if info["temp"] is not None else "-1",
+        ]
     except CalledProcessError:
         return ["err", "err"]
 
 
 if __name__ == "__main__":
     util: list[str | None] = get_gpu_stat()
-    if util[0] == "err" or util[0] == None:
-        print(-1)
-        sys.exit(0)
     print(f"{util[0]}@{util[1]}")
