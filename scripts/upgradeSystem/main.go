@@ -3,32 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 )
 
 const usage = "Usage: .upgrade_system [OPTIONS]\n"
-
-type command struct {
-	Name        string
-	DefaultArgs []string
-	VerboseArgs string
-}
-
-var (
-	commands = []*command{
-		NewCommand("yay", []string{"--noconfirm"}, "-v"),
-		NewCommand("flutter", []string{"upgrade"}, "-vv"),
-		NewCommand("rustup", []string{"update"}, ""),
-		NewCommand("ghcup", []string{"upgrade"}, "-v"),
-		NewCommand("ghcup", []string{"install", "ghc", "latest"}, "-v"),
-		NewCommand("ghcup", []string{"install", "cabal", "latest"}, "-v"),
-		NewCommand("ghcup", []string{"install", "hls", "latest"}, "-v"),
-		NewCommand("ghcup", []string{"install", "stack", "latest"}, "-v"),
-		NewCommand("nvim", []string{"--headless", "-c", "Lazy! sync", "-c", "qall"}, ""),
-		NewCommand("pipx", []string{"upgrade-all"}, "-v"),
-	}
-)
 
 var (
 	help    bool
@@ -51,24 +31,26 @@ func main() {
 
 	checkFlags()
 
+	commands := []*exec.Cmd{
+		NewCommand("yay", []string{"--noconfirm"}, "-v", nil, nil),
+		NewCommand("flutter", []string{"upgrade"}, "-vv", nil, nil),
+		NewCommand("rustup", []string{"update"}, "", nil, nil),
+		NewCommand("ghcup", []string{"upgrade"}, "-v", nil, nil),
+		NewCommand("ghcup", []string{"install", "ghc", "latest"}, "-v", nil, nil),
+		NewCommand("ghcup", []string{"install", "cabal", "latest"}, "-v", nil, nil),
+		NewCommand("ghcup", []string{"install", "hls", "latest"}, "-v", nil, nil),
+		NewCommand("ghcup", []string{"install", "stack", "latest"}, "-v", nil, nil),
+		NewCommand("nvim", []string{"--headless", "-c", "Lazy! sync", "-c", "qall"}, "", nil, nil),
+		NewCommand("nvim", []string{"--headless", "-c", "lua require('mason-registry').update()", "-c", `lua require("os").execute([[ nvim --headless -c "MasonInstall ]]..unpack(require('mason-registry').get_installed_package_names())..[[ " -c "qall" ]])`, "-c", "qall"}, "", nil, nil),
+		NewCommand("pipx", []string{"upgrade-all"}, "-v", nil, nil),
+	}
+
 	for _, cmd := range commands {
-		if !commandExists(cmd.Name) {
-			fmt.Printf("No such command: %s\n", cmd.Name)
+		if cmd == nil {
 			continue
 		}
 
-		execCommand := exec.Command(cmd.Name, cmd.DefaultArgs...)
-
-		if verbose && cmd.VerboseArgs != "" {
-			execCommand.Args = append(execCommand.Args, cmd.VerboseArgs)
-		}
-
-		execCommand.Stdout = os.Stdout
-		if quite {
-			execCommand.Stdout = nil
-		}
-
-		if err := execCommand.Run(); err != nil {
+		if err := cmd.Run(); err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
@@ -80,12 +62,31 @@ func commandExists(cmd string) bool {
 	return err == nil
 }
 
-func NewCommand(name string, defaultArgs []string, verboseArgs string) *command {
-	return &command{
-		Name:        name,
-		DefaultArgs: defaultArgs,
-		VerboseArgs: verboseArgs,
+func NewCommand(name string, defaultArgs []string, verboseArgs string, outPipe io.Writer, inPipe io.Reader) *exec.Cmd {
+	if !commandExists(name) {
+		fmt.Printf("No such command: %s\n", name)
+		return nil
 	}
+	newCmd := exec.Command(name, defaultArgs...)
+
+	if verbose {
+		newCmd.Args = append(newCmd.Args, verboseArgs)
+	}
+
+	newCmd.Stdout = os.Stdout
+	if quite {
+		newCmd.Stdout = nil
+	}
+
+	if outPipe != nil {
+		newCmd.Stdout = outPipe
+	}
+
+	if inPipe != nil {
+		newCmd.Stdin = inPipe
+	}
+
+	return newCmd
 }
 
 func checkFlags() {
