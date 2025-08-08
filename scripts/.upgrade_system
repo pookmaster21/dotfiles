@@ -1,0 +1,128 @@
+#!/usr/bin/env python
+
+import sys
+from subprocess import DEVNULL, CalledProcessError, run
+import argparse
+
+
+class Command:
+    def __init__(
+        self,
+        name: str,
+        default_args: list[str],
+        verbose_args: list[str] = [],
+        shell: bool = False,
+    ):
+        self.name: str = name
+        self.default_args: list[str] = default_args
+        self.verbose_args: list[str] = verbose_args
+        if verbose_args == []:
+            self.verbose_args = self.default_args
+
+        self.out = None
+        self.input = None
+        self.err = None
+
+        self.shell = shell
+
+    def run(self, verbose: bool = False, quite: bool = False) -> None:
+        cmd: list[str] = [self.name] + self.default_args
+        if verbose:
+            cmd = [self.name] + self.verbose_args
+
+        if self.name == "":
+            cmd.pop(0)
+
+        if quite:
+            self.out = DEVNULL
+            self.err = DEVNULL
+
+        run(
+            cmd,
+            encoding="utf-8",
+            check=True,
+            stdout=self.out,
+            stderr=self.err,
+            input=self.input,
+            shell=self.shell,
+        )
+
+
+def main(verbose: bool = False, quite: bool = False) -> None:
+    for cmd in commands:
+        try:
+            cmd.run(verbose=verbose, quite=quite)
+        except FileNotFoundError as e:
+            print(f"command not found")
+        except CalledProcessError as e:
+            print(f"Error running {e.cmd}")
+
+
+if __name__ == "__main__":
+    commands: list[Command] = [
+        Command(
+            name="yay", default_args=["--noconfirm"], verbose_args=["--noconfirm", "-v"]
+        ),
+        Command(
+            name="flutter", default_args=["upgrade"], verbose_args=["upgrade", "-vv"]
+        ),
+        Command(name="rustup", default_args=["update"], verbose_args=["-v", "update"]),
+        Command(name="ghcup", default_args=["upgrade"], verbose_args=["upgrade", "-v"]),
+        Command(
+            name="ghcup",
+            default_args=["install", "ghc", "latest"],
+            verbose_args=["install", "ghc", "latest", "-v"],
+        ),
+        Command(
+            name="ghcup",
+            default_args=["install", "cabal", "latest"],
+            verbose_args=["install", "cabal", "latest", "-v"],
+        ),
+        Command(
+            name="ghcup",
+            default_args=["install", "hls", "latest"],
+            verbose_args=["install", "hls", "latest", "-v"],
+        ),
+        Command(
+            name="ghcup",
+            default_args=["install", "stack", "latest"],
+            verbose_args=["install", "stack", "latest", "-v"],
+        ),
+        Command(
+            name="nvim",
+            default_args=["--headless", "-c", "Lazy! sync", "-c", "qall"],
+            verbose_args=["--headless", "-c", "Lazy! sync", "-c", "qall", "-V"],
+        ),
+        Command(
+            name="",
+            default_args=[
+                """nvim --headless -c "lua require('mason-registry').update()" -c "lua for _,v in ipairs(require('mason-registry').get_installed_package_names()) do io.write(v..' ') end" -c "qall" | { read names; nvim --headless -c "MasonInstall $names" -c "qall"; }""",
+            ],
+            verbose_args=[
+                """nvim --headless -c "lua require('mason-registry').update()" -c "lua for _,v in ipairs(require('mason-registry').get_installed_package_names()) do io.write(v..' ') end" -c "qall" -V | { read names; nvim --headless -c "MasonInstall $names" -c "qall" -V; }""",
+            ],
+            shell=True,
+        ),
+        Command(
+            name="pipx",
+            default_args=["upgrade-all"],
+            verbose_args=["upgrade-all", "-v"],
+        ),
+    ]
+
+    parser = argparse.ArgumentParser(description="update system script")
+
+    parser.add_argument(
+        "--verbose", "-v", action="store_true", help="Enable verbose mode"
+    )
+
+    parser.add_argument("--quite", "-q", action="store_true", help="Enable quite mode")
+
+    args = parser.parse_args()
+
+    if args.verbose and args.quite:
+        print("cannot print verbosely and quitely!")
+        parser.print_usage()
+        sys.exit(1)
+
+    main(verbose=args.verbose, quite=args.quite)
