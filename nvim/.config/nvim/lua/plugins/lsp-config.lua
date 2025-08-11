@@ -54,6 +54,7 @@ return {
 				"bashls",
 			},
 		},
+		automatic_enable = true,
 	},
 	{
 		"RubixDev/mason-update-all",
@@ -70,69 +71,7 @@ return {
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			local lspconfig = require("lspconfig")
-
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.cssls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.dockerls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.eslint.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.hls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.jsonls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.ruby_lsp.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.tailwindcss.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.ts_ls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.zls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.jdtls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.hyprls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.gopls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.pyright.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.clangd.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.bashls.setup({
+			vim.lsp.config("*", {
 				capabilities = capabilities,
 			})
 		end,
