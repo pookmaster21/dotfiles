@@ -1,15 +1,18 @@
 return {
 	{
 		"mason-org/mason.nvim",
-		opts = {
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
+		config = function()
+			require("mason").setup({
+				ui = {
+					icons = {
+						package_installed = "✓",
+						package_pending = "➜",
+						package_uninstalled = "✗",
+					},
 				},
-			},
-			ensure_installed = {
+			})
+
+			local ensure_installed = {
 				"rust_analyzer",
 				"black",
 				"isort",
@@ -25,8 +28,21 @@ return {
 				"prettier",
 				"rubocop",
 				"stylua",
-			},
-		},
+			}
+
+			local registry = require("mason-registry")
+
+			for _, pkg_name in pairs(ensure_installed) do
+				if registry.has_package(pkg_name) then
+					local ok, pkg = pcall(registry.get_package, pkg_name)
+					if ok then
+						if pkg:get_installed_version() ~= pkg:get_latest_version() then
+							pkg:install()
+						end
+					end
+				end
+			end
+		end,
 	},
 	{
 		"mason-org/mason-lspconfig.nvim",
