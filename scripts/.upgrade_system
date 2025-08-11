@@ -20,7 +20,6 @@ class Command:
             self.verbose_args = self.default_args
 
         self.out = None
-        self.input = None
         self.err = None
 
         self.shell = shell
@@ -43,7 +42,6 @@ class Command:
             check=True,
             stdout=self.out,
             stderr=self.err,
-            input=self.input,
             shell=self.shell,
         )
 
