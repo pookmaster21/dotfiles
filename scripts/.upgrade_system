@@ -11,7 +11,6 @@ class Command:
         name: str,
         default_args: list[str],
         verbose_args: list[str] = [],
-        shell: bool = False,
     ):
         self.name: str = name
         self.default_args: list[str] = default_args
@@ -21,8 +20,6 @@ class Command:
 
         self.out = None
         self.err = None
-
-        self.shell = shell
 
     def run(self, verbose: bool = False, quite: bool = False) -> None:
         cmd: list[str] = [self.name] + self.default_args
@@ -42,7 +39,6 @@ class Command:
             check=True,
             stdout=self.out,
             stderr=self.err,
-            shell=self.shell,
         )
 
 
@@ -92,14 +88,22 @@ if __name__ == "__main__":
             verbose_args=["--headless", "-c", "Lazy! sync", "-c", "qall", "-V"],
         ),
         Command(
-            name="",
+            name="nvim",
             default_args=[
-                """nvim --headless -c "lua require('mason-registry').update()" -c "lua for _,v in ipairs(require('mason-registry').get_installed_package_names()) do io.write(v..' ') end" -c "qall" | { read names; nvim --headless -c "MasonInstall $names" -c "qall"; }""",
+                "--headless",
+                "-c",
+                "autocmd User MasonUpdateAllComplete quitall",
+                "-c",
+                "MasonUpdateAll",
             ],
             verbose_args=[
-                """nvim --headless -c "lua require('mason-registry').update()" -c "lua for _,v in ipairs(require('mason-registry').get_installed_package_names()) do io.write(v..' ') end" -c "qall" -V | { read names; nvim --headless -c "MasonInstall $names" -c "qall" -V; }""",
+                "--headless",
+                "-c",
+                "autocmd User MasonUpdateAllComplete quitall",
+                "-c",
+                "MasonUpdateAll",
+                "-V",
             ],
-            shell=True,
         ),
         Command(
             name="pipx",
