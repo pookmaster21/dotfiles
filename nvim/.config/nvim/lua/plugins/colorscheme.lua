@@ -1,10 +1,9 @@
 return {
-	"folke/tokyonight.nvim",
-	lazy = false,
+	"bluz71/vim-moonfly-colors",
 	priority = 1000,
-	opts = {},
+	lazy = false,
+	name = "moonfly",
 	config = function()
-		require("tokyonight").setup()
-		vim.cmd.colorscheme("tokyonight-night")
+		vim.cmd.colorscheme("moonfly")
 	end,
 }
