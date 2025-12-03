@@ -109,3 +109,4 @@ cmd zip ${{
 
 set icons true
 set hidden true
+set drawbox
