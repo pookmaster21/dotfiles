@@ -24,10 +24,7 @@
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
   "hyprland/workspaces": {
-    "format": "{name}",
-    "persistent-workspaces": {
-      "*": 5
-    }
+    "format": "{name}"
   },
   "tray": {
     "icon-size": 21,
