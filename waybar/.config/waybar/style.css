@@ -1,112 +1,116 @@
-* {
-  font-family: "FiraCode Nerd Font", Cantarell, Noto Sans, sans-serif;
-  font-size: 16px;
-}
+@import 'colors/one-dark.css';
 
-#window {
-  padding: 0 10px;
+* {
+  border: none;
+  border-radius: 0px;
+
+  font-family: "FiraCode Nerd Font";
+  font-weight: bold;
+
+  font-size: 16px;
+
+  min-height: 0;
+  padding: 0;
+  margin: 0;
 }
 
 window#waybar {
-  all: unset
+  background: transparent;
 }
 
-.modules-left {
-  padding: 5px;
-  margin: 10 0 5 10;
-  border-radius: 40px;
-  background: #1a1b26;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+tooltip {
+  background: @bg0;
+  border: 1px solid @bg3;
+  border-radius: 12px;
 }
 
-.modules-center {
-  padding: 5px;
-  margin: 10 0 5 0;
-  border-radius: 40px;
-  background: #1a1b26;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
-}
-
-.modules-right {
-  padding: 5px;
-  margin: 10 10 5 0;
-  border-radius: 40px;
-  background: #1a1b26;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, .6);
+tooltip label {
+  color: @fg;
+  padding: 6px;
 }
 
 #workspaces {
-  margin: 0 5px;
+  background-color: @bg0;
+  padding: 5px 3px;
+  margin: 0 0 0 12px;
+  border-radius: 18px;
+  border: 1px solid @bg1;
+  color: @fg;
 }
 
 #workspaces button {
-  padding: 0 8px;
-  color: #565f89;
-  border: 3px solid rgba(9, 85, 225, 0);
-  border-radius: 10px;
-  min-width: 33px;
+  padding: 0px 6px;
+  margin: 0px 3px;
+  border-radius: 45px;
+  color: transparent;
+  background-color: @bg1;
+  transition: all 0.3s ease-in-out;
 }
 
-#workspaces button.visible {
-  color: #a9b1d6;
-}
-
-#workspaces button.focused {
-  border-top: 3px solid #7aa2f7;
-  border-bottom: 3px solid #7aa2f7;
-}
-
-#workspaces button.urgent {
-  background-color: #a96d1f;
-  color: white;
+#workspaces button.active {
+  background-color: @blue;
+  color: @bg0;
+  min-width: 45px;
+  transition: all 0.3s ease-in-out;
+  font-size: 13px;
 }
 
 #workspaces button:hover {
-  box-shadow: inherit;
-  border-color: #bb9af7;
-  color: #bb9af7;
+  background-color: @purple;
+  color: @bg0;
+  border-radius: 16px;
+  min-width: 45px;
+  background-size: 400% 400%;
 }
 
-/* Repeat style here to ensure properties are overwritten as there's no !important and button:hover above resets the colour */
-
-#workspaces button.focused {
-  color: #7aa2f7;
+#workspaces button.urgent {
+  background-color: @red;
+  color: @bg0;
+  border-radius: 16px;
+  min-width: 45px;
+  background-size: 400% 400%;
+  transition: all 0.3s ease-in-out;
 }
 
-#workspaces button.focused:hover {
-  color: #bb9af7;
-}
-
-#pulseaudio,
-#tray,
 #battery,
-#cpu,
-#language,
-#custom-gpu,
-#memory,
-#network,
 #pulseaudio,
+#network,
+#clock,
 #backlight,
-#custom-media {
-  margin: 0px 0px 0px 10px;
-  padding: 0px 7px;
+#language,
+#custom-notification {
+  background-color: @bg0;
+  padding: 0 15px 0 15px;
+  margin: 0 0 0 12px;
+  border-radius: 45px;
+  border: 1px solid @bg1;
 }
 
-#battery.warning {
-  color: rgba(255, 210, 4, 1);
+#clock {
+  color: @blue;
 }
 
-#battery.critical {
-  color: rgba(238, 46, 36, 1);
+#pulseaudio {
+  color: @yellow;
 }
 
-#battery.charging {
-  color: rgba(217, 216, 216, 1);
+#network {
+  color: @purple;
 }
 
-@keyframes blink {
-  to {
-    background-color: #ffffff;
-    color: black;
-  }
+#backlight {
+  color: @white;
+}
+
+#language {
+  color: @orange;
+}
+
+#battery {
+  color: @green;
+}
+
+#custom-notification {
+  color: @fg;
+  margin: 0 12px 0 12px;
 }
