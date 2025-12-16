@@ -1,3 +1,3 @@
 . "$HOME/.cargo/env"
 
-export TERMINAL=alacritty
+export TERMINAL=kitty
