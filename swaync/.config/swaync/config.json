@@ -59,7 +59,7 @@
         },
         {
           "label": "󰏘",
-          "command": "nwg-look"
+          "command": "hyprpicker"
         }
       ]
     }
